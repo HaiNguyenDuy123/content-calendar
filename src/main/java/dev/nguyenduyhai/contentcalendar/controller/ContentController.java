@@ -2,6 +2,7 @@ package dev.nguyenduyhai.contentcalendar.controller;
 
 import dev.nguyenduyhai.contentcalendar.model.Content;
 import dev.nguyenduyhai.contentcalendar.repository.ContentCollectionRepository;
+import dev.nguyenduyhai.contentcalendar.repository.ContentRepository;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -14,13 +15,13 @@ import java.util.Optional;
 @RequestMapping("/api/content")
 public class ContentController {
 
-    private final ContentCollectionRepository repository;
+    private final ContentRepository repository;
 
-    public ContentController(ContentCollectionRepository repository) {
+    public ContentController(ContentRepository repository) {
         this.repository = repository;
     }
 
-    @GetMapping()
+    @GetMapping
     public List<Content> findAll() {
         return repository.findAll();
     }
@@ -32,16 +33,16 @@ public class ContentController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("")
+    @PostMapping
     public void create(@Valid @RequestBody Content content) {
         repository.save(content);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{id}")
-    public void update(@RequestBody Content content, @PathVariable Integer id) {
+    public void update(@Valid @RequestBody Content content, @PathVariable Integer id) {
         if(!repository.existsById(id)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Content not found!");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Content not found.");
         }
         repository.save(content);
     }
@@ -50,5 +51,10 @@ public class ContentController {
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Integer id) {
         repository.deleteById(id);
+    }
+
+    @GetMapping("/filter/type/{type}")
+    public List<Content> filterByType(@PathVariable String type) {
+        return repository.findAllByContentType(type.toUpperCase());
     }
 }
