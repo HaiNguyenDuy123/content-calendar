@@ -31,35 +31,27 @@ public class ContentCollectionRepository {
         contentList.add(content);
     }
 
+
     @PostConstruct
     private void init() {
         Content content = new Content(1,
-                "my first page",
-                "My first post",
+                "My First Blog Post",
+                "My first blog post",
                 Status.IDEA,
                 Type.ARTICLE,
                 LocalDateTime.now(),
                 null,
                 "");
-        Content content_1 = new Content(2,
-                "my qweqweqweq page",
-                "My first post",
-                Status.IDEA,
-                Type.ARTICLE,
-                LocalDateTime.now(),
-                null,
-                "");
+
         contentList.add(content);
-        contentList.add(content_1);
+
     }
 
     public boolean existsById(Integer id) {
         return contentList.stream().filter(c -> c.id().equals(id)).count() == 1;
-
     }
 
-    public void deleteById(Integer id) {
-        contentList.removeIf(c ->c.id().equals(id));
+    public void delete(Integer id) {
+        contentList.removeIf(c -> c.id().equals(id));
     }
 }
-

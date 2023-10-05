@@ -15,7 +15,7 @@ public record Content(
         Status status,
         Type contentType,
         LocalDateTime dateCreated,
-        LocalDateTime dataUpdated,
+        LocalDateTime dateUpdated,
         String url
 ) {
 }

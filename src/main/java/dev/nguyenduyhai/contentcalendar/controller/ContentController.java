@@ -1,6 +1,7 @@
 package dev.nguyenduyhai.contentcalendar.controller;
 
 import dev.nguyenduyhai.contentcalendar.model.Content;
+import dev.nguyenduyhai.contentcalendar.model.Status;
 import dev.nguyenduyhai.contentcalendar.repository.ContentCollectionRepository;
 import dev.nguyenduyhai.contentcalendar.repository.ContentRepository;
 import jakarta.validation.Valid;
@@ -13,6 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/content")
+@CrossOrigin
 public class ContentController {
 
     private final ContentRepository repository;
@@ -21,19 +23,19 @@ public class ContentController {
         this.repository = repository;
     }
 
-    @GetMapping
+    @GetMapping("")
     public List<Content> findAll() {
         return repository.findAll();
     }
 
     @GetMapping("/{id}")
-    public Optional<Content> findById(@PathVariable Integer id) {
-        return Optional.ofNullable(repository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Content not found.")));
+    public Content findById(@PathVariable Integer id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Content not found."));
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping
+    @PostMapping("")
     public void create(@Valid @RequestBody Content content) {
         repository.save(content);
     }
@@ -53,8 +55,13 @@ public class ContentController {
         repository.deleteById(id);
     }
 
-    @GetMapping("/filter/type/{type}")
-    public List<Content> filterByType(@PathVariable String type) {
-        return repository.findAllByContentType(type.toUpperCase());
+    @GetMapping("/filter/{keyword}")
+    public List<Content> findByTitle(@PathVariable String keyword) {
+        return repository.findALlByTitleContains(keyword);
+    }
+
+    @GetMapping("/filter/status/{status}")
+    public List<Content> findByStatus(@PathVariable Status status) {
+        return repository.listByStatus(status);
     }
 }
