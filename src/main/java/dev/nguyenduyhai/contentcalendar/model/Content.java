@@ -11,7 +11,6 @@ public record Content(
         @Id
         Integer id,
         String title,
-        @Column(value = "description")
         String desc,
         Status status,
         Type contentType,
