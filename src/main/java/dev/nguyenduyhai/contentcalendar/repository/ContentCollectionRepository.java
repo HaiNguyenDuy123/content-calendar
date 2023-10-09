@@ -1,5 +1,4 @@
 package dev.nguyenduyhai.contentcalendar.repository;
-
 import dev.nguyenduyhai.contentcalendar.model.Content;
 import dev.nguyenduyhai.contentcalendar.model.Status;
 import dev.nguyenduyhai.contentcalendar.model.Type;
@@ -10,6 +9,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 @Repository
 public class ContentCollectionRepository {
 

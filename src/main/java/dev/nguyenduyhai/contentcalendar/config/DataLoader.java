@@ -6,6 +6,7 @@ import dev.nguyenduyhai.contentcalendar.model.Content;
 import dev.nguyenduyhai.contentcalendar.repository.ContentRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+
 import java.io.InputStream;
 import java.util.List;
 
@@ -19,10 +20,13 @@ public class DataLoader implements CommandLineRunner {
         this.repository = repository;
         this.objectMapper = objectMapper;
     }
+
     @Override
     public void run(String... args) throws Exception {
-        try(InputStream inputStream = TypeReference.class.getResourceAsStream("/data/content.json")) {
-            repository.saveAll(objectMapper.readValue(inputStream,new TypeReference<List<Content>>(){}));        }
+            try (InputStream inputStream = TypeReference.class.getResourceAsStream("/data/content.json")) {
+                repository.saveAll(objectMapper.readValue(inputStream,new TypeReference<List<Content>>(){}));
+            }
+        }
     }
-}
+
 

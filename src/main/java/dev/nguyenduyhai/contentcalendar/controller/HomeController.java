@@ -4,7 +4,6 @@ import dev.nguyenduyhai.contentcalendar.config.ContentCalendarProperties;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController
 public class HomeController {
 
@@ -14,8 +13,9 @@ public class HomeController {
         this.properties = properties;
     }
 
-    @GetMapping("/hello")
+    @GetMapping("/")
     public ContentCalendarProperties home() {
         return properties;
     }
+
 }
