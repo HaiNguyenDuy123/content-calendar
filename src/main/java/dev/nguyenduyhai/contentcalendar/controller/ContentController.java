@@ -32,7 +32,7 @@ public class ContentController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping
+    @PostMapping("")
     public void create(@Valid @RequestBody Content content) {
         repository.save(content);
     }
